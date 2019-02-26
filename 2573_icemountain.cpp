@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <queue>
 using namespace std;
 
 int N, M = 0;
@@ -11,6 +12,10 @@ int melt_map[301][301] = { 0 };
 int visited[301][301] = { 0 };
 int dy[4] = { 1,-1,0,0 };
 int dx[4] = { 0,0,1,-1 };
+int island = 1;
+int cnt = 0;
+bool check = false;
+queue<pair<int, int>> q;
 
 void dfs(int y, int x) {
 	for (int i = 0; i < 4; i++) {
@@ -32,7 +37,7 @@ int main() {
 	freopen("input.txt", "r", stdin);
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	
+
 	cin >> N;
 	cin >> M;
 
@@ -40,53 +45,95 @@ int main() {
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < M; j++) {
 			cin >> map[i][j];
+			if (map[i][j]) q.push(make_pair(i, j));
 		}
 	}
 
 	//°Ë»ç ÇÏ¸ç °Ô¼Ó ¹Ø¿¡ ¹Ýº¹ÇÏ±â 
+	while (!q.empty()) {
+		while (!q.empty()) {
+			int i = q.front().first;
+			int j = q.front().second;
+			
+			q.pop();
+			if (map[i][j] && !visited[i][j]) {
+				visited[i][j] = 1;
+				cnt++;
+				dfs(i, j);
+			}
+			
+		}
+		if (cnt > 1) {
+			check = true;
+			break;
+		}
+		cnt = 0;
+		
 
+		////visited map print
+		//cout << "visited map" << endl;
+		//for (int i = 0; i < N; i++) {
+		//	for (int j = 0; j < M; j++) {
+		//		cout << visited[i][j];
+		//	}
+		//	cout << endl;
+		//}
 
-
-		//³ì´Â ¸Ê (ÅÆÆÛ·¯¸®)
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
 				int melt = 0;
-				if (map[i+1][j] == 0) {
+				if (map[i + 1][j] == 0) {
 					melt++;
 				}
-				if (map[i][j+1] == 0) {
+				if (map[i][j + 1] == 0) {
 					melt++;
 				}
-				if (map[i-1][j] == 0) {
+				if (map[i - 1][j] == 0) {
 					melt++;
 				}
-				if (map[i][j-1] == 0) {
+				if (map[i][j - 1] == 0) {
 					melt++;
 				}
 				melt_map[i][j] = melt;
 			}
 		}
 
+
 		//³ì°í³­ ÈÄ ¸Ê
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
-		
+
 				map[i][j] -= melt_map[i][j];
 				if (map[i][j] < 0) {
 					map[i][j] = 0;
 				}
+				if (map[i][j]) q.push(make_pair(i, j));
 			}
 		}
 		year++;
 
-	
-	/*for (int i = 0; i < N; i++) {
-		for (int j = 0; j < M; j++) {
-			cout<< map[i][j];
+		// map print
+		//cout << "map" << endl;
+		//for (int i = 0; i < N; i++) {
+		//	for (int j = 0; j < M; j++) {
+		//		cout << map[i][j];
+		//	}
+		//	cout << endl;
+		//}
 
+		//ÃÊ±âÈ­
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < M; j++) {
+
+				melt_map[i][j] = 0;
+				visited[i][j] = 0 ;
+			}
 		}
-		cout << endl;
-	}*/
+	}
+	
+	
+	if (check == false)
+		year = 0;
 
 	cout <<year;
 }
