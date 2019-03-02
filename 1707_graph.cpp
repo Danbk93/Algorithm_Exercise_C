@@ -1,82 +1,72 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
+#include <algorithm>
 #include <vector>
 
 using namespace std;
 
-int check[20002] = {0};
-vector<int> v[20002];
-
+vector<int> a[20001];
+int color[20001];
 
 void dfs(int node, int c)
 {
-	check[node] = c;
-	for (int i = 0; i < v[node].size(); i++)
+	color[node] = c;
+	for (int i = 0; i < a[node].size(); i++)
 	{
-		int next = v[node][i];
-		if (check[next] == 0)
+		int next = a[node][i];
+		if (color[next] == 0)
 		{
 			dfs(next, 3 - c);
 		}
 	}
 }
 
-
-int main() {
+int main()
+{
 	freopen("input.txt", "r", stdin);
-	ios_base::sync_with_stdio(false);
+	cin.sync_with_stdio(false);
 	cin.tie(NULL);
+	int T;
 
-	int K, V, E = 0 ;
-	cin >> K;
+	cin >> T;
 
-	while (K--)
+	while (T--)
 	{
-		cin >> V;
-		cin >> E;
-
-		for (int i = 0; i < E; i++)
+		int n, m;
+		cin >> n >> m;
+		for (int i = 1; i <= n; i++)
 		{
-			int x, y = 0;
-			cin >> x;
-			cin >> y;
-			v[x].push_back(y);
-			v[y].push_back(x);
+			a[i].clear();
+			color[i] = 0;
 		}
-
-		bool graph = true;
-
-		for (int i = 1; i <= V; i++) {
-		
-			if (check[i] == 0)
+		for (int i = 0; i < m; i++)
+		{
+			int u, v;
+			cin >> u >> v;
+			a[u].push_back(v); a[v].push_back(u);
+		}
+		for (int i = 1; i <= n; i++)
+		{
+			if (color[i] == 0)
 			{
 				dfs(i, 1);
-				
 			}
 		}
-
-		for (int i = 1; i <= V; i++)
+		bool ok = true;
+		for (int i = 1; i <= n; i++)
 		{
-			for (int k = 0; k < v[i].size(); k++)
+			for (int k = 0; k < a[i].size(); k++)
 			{
-				int j = v[i][k];
-				if (check[i] == check[j])
+				int j = a[i][k];
+				if (color[i] == color[j])
 				{
-					graph = false;
+					ok = false;
 				}
 			}
 		}
-		
-		if (graph == true) {
-			cout << "YES" << endl;
-		}
-		else {
-			cout << "NO" << endl;
-		}
 
-		for (int i = 0; i < V; i++) {
-			check[i] = 0;
-			v[i].clear();
-		}
+		if (ok) cout << "YES\n";
+		else cout << "NO\n";
 	}
+
+	return 0;
 }

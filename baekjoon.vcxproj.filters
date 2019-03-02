@@ -20,7 +20,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="1707_graph.cpp">
+    <ClCompile Include="1697_hide_and_seak.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
