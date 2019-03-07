@@ -5,40 +5,53 @@
 
 using namespace std;
 
-int N,M;
-int box[1001][1001];
-queue<int> ripe;
+int N,M,P;
+int power[10];
+char map[1001][1001];
+
+struct castle {
+	char num;
+	int x; 
+	int y; 
+};
+
+queue<char> q;
+
 int dx[4] = { 1,0,-1,0 };
 int dy[4] = { 0,1,0,-1 };
-int visited[1001][1001];
-int day;
 
-int main(void){
+int visited[1001][1001];
+
+
+int main(void) {
 	freopen("input.txt", "r", stdin);
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	cin >> M;
-	cin >> N;
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < M; j++) {
-			cin >> box[i][j];
-			if (box[i][j]==1) {
-				ripe.push(i * 10000 + j);
-				visited[i][j] = 1;
-			}
+	cin >> N >> M >> P;
 
-		}
-
+	for (int i = 0; i < P; i++) {
+		cin >> power[i];
 	}
 
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			cin >> map[i][j];
+			if (map[i][j] != '.' || map[i][j] != '#') {
+
+				q.push(map[i][j]);
+				visited[i][j] = 1;
+			}
+		}
+	}
+	
 	while (1) {
-		queue<int> next_ripe;
-		while (!ripe.empty()) {
-			int y = ripe.front() / 10000;
-			int x = ripe.front() % 10000;
-			
-			ripe.pop();
+		queue<char> next_castle;
+		while (!castle.empty()) {
+			int y = castle.front() / 10000;
+			int x = castle.front() % 10000;
+
+			castle.pop();
 			for (int i = 0; i < 4; i++) {
 				int nx = x + dx[i];
 				int ny = y + dy[i];
@@ -46,41 +59,34 @@ int main(void){
 				if (ny < 0 || ny >= N || nx < 0 || nx >= M)
 					continue;
 
-				if (visited[ny][nx] || box[ny][nx] != 0)
+				if (visited[ny][nx] || map[ny][nx] != 0)
 					continue;
 
 				visited[ny][nx] = 1;
-				box[ny][nx] = 1;
-				next_ripe.push(ny * 10000 + nx);
+				map[ny][nx] = 1;
+				next_castle.push(ny * 10000 + nx);
 			}
-			
+
 		}
 
-		ripe = next_ripe;
-		if (ripe.empty()) {
+		castle = next_castle;
+		if (castle.empty()) {
 			break;
 		}
-		day++;
 	}
 
+
+	
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < M; j++) {
-			if (box[i][j] == 0) {
-				day = -1;
-				break;
-			}
+			cout << map[i][j];
 
 		}
-	}			
-
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < M; j++) {
-			cout << box[i][j];
-
-		}
-		cout<<endl;
+		cout << endl;
 
 	}
-	cout <<day<< endl;
 
 }
+
+
+
