@@ -1,9 +1,4 @@
-5
-ba
-a
-abab
-a
-aba
-baba
-ab
-aba
+3
+1234
+5678
+9
