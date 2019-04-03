@@ -9,28 +9,49 @@ using namespace std;
 
 int T;
 int whos[19];
-int gyu[9];
 int in[9];
+vector<int> kyu;
 
 
 int main(void) {
 	freopen("input.txt", "r", stdin);
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-
+	
 	cin >> T;
 
-	while (T--) {
+	for(int i=0;i<T;i++){
 
-		for (int i=1; i <= 18; i++) {
+		int win = 0;
+		int lost = 0;
+
+		for (int j=0; j < 9; j++) {
 			int a = 0;
 			cin >> a;
-			if(a==i)
+			whos[a] = 1;
+			in[j] = a;
 		}
 
-		
+		for (int h = 0; h< 19; h++) {
+	
+			if (whos[h] == 0) {
+
+				kyu.push_back(h);
+			}
+			
+		}
 
 
+
+		next_permutation(kyu.begin(),kyu.end());
+
+
+
+		cout << "#" << i << " " << win<<" "<<lost;
+
+		for (int k = 0; k < 19; k++) {
+			whos[k] = 0;
+		}
 	}
 
 
