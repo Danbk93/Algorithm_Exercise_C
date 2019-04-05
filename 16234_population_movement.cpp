@@ -5,11 +5,11 @@
 
 using namespace std;
 int N, L, R;
-int dx[] = { 0, 0, 1, -1 };
-int dy[] = { 1, -1, 0, 0 };
+int dx[4] = { 0, 0, 1, -1 };
+int dy[4] = { 1, -1, 0, 0 };
 int visited[51][51] = { 0, };
 
-void bfs(int a,int b) {	//check 배열은 방문 여부를 확인하는 배열
+void bfs(int a,int b) {	
 	queue<pair<int, int>> q;
 	q.push(make_pair(a,b)); 
 	visited[a][b] = true;
