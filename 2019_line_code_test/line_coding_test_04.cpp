@@ -2,54 +2,48 @@
 #include <iostream>
 #include <algorithm>
 #include <queue>
+#include<string>
 
 using namespace std;
 
+int N;
 
-int main(void)
-{
+
+int main(void) {
 	freopen("input.txt", "r", stdin);
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	int N, K;
-	int bigger = 0;
-	bool visit[100001] = { 0, };
+	cin >> N;
+	vector<vector<int>> v(N+1, vector<int>(2));
 
-	cin >> N >> K;
-
-	queue<pair<int, int>> q;
-
-	q.push(pair<int, int>(N, 0));
-
-	while (true) {
-
-		while (!q.empty())
-		{
-			int pos = q.front().first;
-			int depth = q.front().second;
-
-			if (pos == K)
-				break;
-
-			q.pop();
-
-			visit[pos] = true;
-
-			if (pos - 1 >= 0 && !visit[pos - 1])
-				q.push(pair<int, int>(pos - 1, depth + 1));
-			if (pos + 1 <= 100000 && !visit[pos + 1])
-				q.push(pair<int, int>(pos + 1, depth + 1));
-			if (pos * 2 <= 100000 && !visit[pos * 2])
-				q.push(pair<int, int>(pos * 2, depth + 1));
-		}
-		
-		bigger++;
-		K += bigger;
-	}
+	for (int i=1; i <= N; i++) {
 	
+		int a = 0;
+		cin >> a;
+		v[i][0] = a;
+		v[i][1] = i;
+	}
 
-	cout << q.front().second << endl;
+	sort(v.begin(), v.end());
 
-	return 0;
+	for(int i=N;;)
+
+
+	for (int i = 1; i <= N; i++) {
+		for (int j = 0; j < 2; j++) {
+		
+			cout<< v[i][j]<<" ";
+			
+		}
+		cout << endl;
+	}
+
+
+
+
+
 }
+
+
+
