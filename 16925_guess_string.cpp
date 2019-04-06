@@ -3,12 +3,47 @@
 #include <algorithm>
 #include <queue>
 #include <string>
+#include <cstring>
 
 using namespace std;
 int N;
 string ary[200][2];
-vector<string> first;
 string pref[200];
+int alphabet_p[27] = { 0, };
+int alphabet_s[27] = { 0, };
+int most = 0;
+char prefix = '0';
+char subfix = '0';
+
+void find_P(){
+	//접두사 찾기
+
+	most = 0;
+	for (int i = 1; i < 27; i++) {
+		if (most < alphabet_p[i]) {
+			most = alphabet_p[i];
+			prefix = char(i + 96);
+		}
+
+	}
+	cout << prefix << endl;
+
+}
+void find_S() {
+
+	//접미사 찾기
+
+	most = 0;
+
+	for (int i = 1; i < 27; i++) {
+		if (most < alphabet_s[i]) {
+			most = alphabet_s[i];
+			subfix = char(i + 96);
+		}
+
+	}
+	cout << subfix << endl;
+}
 
 int main(void) {
 	freopen("input.txt", "r", stdin);
@@ -17,91 +52,61 @@ int main(void) {
 
 	cin >> N;
 
-	char x = '0';
-	char y = '0';
-	int x_c = 0;
-	int y_c = 0;
-
-	string str = "0";
-	char back = '0';
-
-	
-
+	//input
 	for (int i = 0; i < 2*(N - 1); i++) {
 		string a;
 		cin >> a;
 		string len = to_string(a.length());
 		
-		
 		ary[i][0]= a;
 		ary[i][1] = len;
 	}
-	//접두사 찾기
+
+
 	for (int i = 0; i < 2 * (N - 1); i++) {
+		alphabet_p[int(ary[i][0].front()) - 96]++;
+
+	}
+	find_P();
+
+	for (int i = 0; i < 2 * (N - 1); i++) {
+		alphabet_s[int(ary[i][0].back()) - 96]++;
+	}
+
+	find_S();
+
 	
-		if (i == 0) {
-			x = ary[i][0].front();
-			x_c++;
-		}
-		else if (x != ary[i][0].front()) {
-			y = ary[i][0].front();
-			y_c++;
-		}
-		else {
-			x_c++;
-		}
-		
+	for (int i = 1; i < 27; i++) {
+		 
+		cout << alphabet_p[i] << alphabet_s[i] <<endl;
 		
 	}
-	if (x_c < y_c) {
-		str = y;
-	}
-	else {
-		str = x;
-		
-	}
-	x_c = 0;
-	y_c = 0;
 
-	//접미사 찾기
-	for (int i = 0; i < 2 * (N - 1); i++) {
-
-		if (i == 0) {
-			x = ary[i][0].back();
-			x_c++;
+	//1 글자 prefix subfix 적용
+	int f = 0;
+	for (int j = 0; j < 2 * (N - 1); j++) {
+		if (ary[j][1] == to_string(1)) {
+			if (prefix == ary[j][0][0] && f == 0) {
+				pref[j] = 'P';
+				f = 1;
+			}
+			else if (subfix == ary[j][0][0]) {
+				pref[j] = 'S';
+			}
 		}
-		else if (x != ary[i][0].back()) {
-			y = ary[i][0].back();
-			y_c++;
-		}
-		else {
-			x_c++;
-		}
-
-
 	}
-	if (x_c <= y_c) {
-		back = y;
 
-	}
-	else {
-		back = x;
-
-	}
+	string str(1, prefix);
 
 	// 하나씩 더하기
 	string A_can = "0";
 	string B_can = "0";
 	int aj = 0;
 	int bj = 0;
+
 	for (int i=2;i<=N-1; i++) {
 		for (int j = 0; j < 2 * (N - 1); j++) {
-			if (str == ary[j][0]) { // 이 부분 중복 되는거 고치기
-				pref[j] = 'P';
-			}else if (to_string(back) == ary[j][0]) {
-				pref[j] = 'S';
-			}
-
+		
 			if (ary[j][1] == to_string(i)) {
 			
 				if (A_can=="0") {
@@ -112,13 +117,11 @@ int main(void) {
 					B_can = ary[j][0];
 					bj = j;
 				}
-				
-					
+			
 			}
 		}
-		cout << aj+1 <<" "<< bj+1<<endl; // 이부분도 중복 되는부분 있음 
 
-		if (A_can.back()==back) {
+		if (A_can.back()==subfix) {
 			if (str == B_can.substr(0, i - 1)) {
 				str = B_can;
 				pref[bj] = 'P';
@@ -130,7 +133,7 @@ int main(void) {
 			}
 			
 		}
-		else if (B_can.back() == back){
+		else if (B_can.back() == subfix){
 			if (str == A_can.substr(0, i - 1)) {
 				str = A_can;
 				pref[aj] = 'P';
@@ -147,7 +150,7 @@ int main(void) {
 		B_can = "0";
 	}
 
-	cout << str+back<<endl;
+	cout << str+subfix<<endl;
 
 	for (int i = 0; i < 2 * (N - 1); i++) {
 		cout << pref[i];
