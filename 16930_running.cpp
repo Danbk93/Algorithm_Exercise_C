@@ -23,19 +23,25 @@ void bfs(int a, int b) {
 		int y = q.front().second;
 
 		q.pop();
+		int temp = 0;
+		while (temp < K) {
+			for (int i = 0; i < 4; i++) {
+				int nx = dx[i] + x;
+				int ny = dy[i] + y;
 
-		for (int i = 0; i < 4; i++) {
-			int nx= dx[i] + x;
-			int ny = dy[i] + y;
+				if (nx < 0 || nx >= N || ny < 0 || ny >= M || map[nx][ny] == '#') continue;
+				if (nx == x_2 && ny == y_2) {
 
-			if (visited[nx][ny] == 1)continue;
-			if (nx < 0 || nx >= N || ny < 0 || ny >= M|| nx==)continue;
-			if () {
-				q.push(make_pair(nx, ny));
-				visited[nx][ny]==1
+				}
+				if (visited[nx][ny] == 0) {
+					q.push(make_pair(nx, ny));
+					visited[nx][ny] == 1;
+				}
+
 			}
-
+			temp++;
 		}
+	
 
 	}
 
@@ -67,7 +73,10 @@ int main(void) {
 
 	cin >> x_1 >> y_1 >> x_2 >> y_2;
 
-	
+	bfs(x_1, y_1);
+
+
+
 }
 
 
