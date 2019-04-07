@@ -26,7 +26,7 @@ void find_P(){
 		}
 
 	}
-	cout << prefix << endl;
+	//cout << prefix << endl;
 
 }
 void find_S() {
@@ -42,7 +42,7 @@ void find_S() {
 		}
 
 	}
-	cout << subfix << endl;
+	//cout << subfix << endl;
 }
 
 int main(void) {
@@ -65,22 +65,39 @@ int main(void) {
 
 	for (int i = 0; i < 2 * (N - 1); i++) {
 		alphabet_p[int(ary[i][0].front()) - 96]++;
-
+		
 	}
-	find_P();
 
 	for (int i = 0; i < 2 * (N - 1); i++) {
 		alphabet_s[int(ary[i][0].back()) - 96]++;
 	}
 
-	find_S();
+
+	int cnt = 0;
+	vector<int> v;
+	for (int i = 1; i < 27; i++) {
+		if (alphabet_p[i] > 0) {
+			cnt++;
+			v.push_back(alphabet_p[i]);
+		}
+	}
+	if (cnt == 2&& v[0] == v[1]) {
+		find_S();
+		alphabet_p[int(subfix) - 96]--;
+		find_P();
+
+	}else {
+		find_P();
+		alphabet_s[int(prefix) - 96]--;
+		find_S();
+	}
 
 	
-	for (int i = 1; i < 27; i++) {
-		 
-		cout << alphabet_p[i] << alphabet_s[i] <<endl;
-		
-	}
+	//for (int i = 1; i < 27; i++) {
+	//	 
+	//	cout << alphabet_p[i] << alphabet_s[i] <<endl;
+	//	
+	//}
 
 	//1 글자 prefix subfix 적용
 	int f = 0;
