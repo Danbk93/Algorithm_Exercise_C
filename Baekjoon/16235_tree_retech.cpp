@@ -23,7 +23,7 @@ struct tree_info {
 
 vector<tree_info> v;
 
-bool cmp(const tree_info &a, const tree_info &b) {
+bool cmp(tree_info a, tree_info b) {
 
 	if (a.x == b.x && a.y == b.y) {
 		return a.age < b.age;
@@ -72,27 +72,17 @@ int main(void) {
 
 		//봄
 		for (int i = 0; i < v.size(); i++) {
-
 			int x = v[i].x;
 			int y = v[i].y;
 			int age = v[i].age;
 
-			//나무 죽는다.
 			if (d[x][y] < age) {
 				dead.push_back({ x, y, age });
 			}
-			//나무가 양분을 먹는다.
 			else {
-				//양분 줄고
 				d[x][y] -= age;
-
-				//나무 나이 1증가
 				v[i].age++;
-
-				//살아남은 나무 보관
 				alive.push_back({ x, y, v[i].age });
-
-				//5살 나무 보관
 				if (v[i].age % 5 == 0) five.push_back({ x, y, v[i].age });
 			}
 
