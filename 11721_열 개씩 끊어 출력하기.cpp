@@ -3,17 +3,21 @@
 #include<string>
 using namespace std;
 
-int N;
+string N;
 
 int main() {
 
 	freopen("input.txt", "r", stdin);
-	int ans = 0;
+	int cnt = 0;
 	cin >> N;
-	for (int i = 0; i < N; i++) {
-		int temp=0;
-		scanf("%1d", &temp);
-		ans += temp;
+	for (int i = 0; i < N.size(); i++) {
+		cnt++;
+		cout << N[i];
+
+		if (cnt % 10 == 0) {
+			cout << endl;
+		}
+
 	}
-	printf("%d", ans);
+	
 }
