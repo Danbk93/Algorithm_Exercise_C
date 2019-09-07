@@ -4,7 +4,7 @@
 #include <vector>
 using namespace std;
 
-int n,k;
+int n, k;
 
 int main() {
 
