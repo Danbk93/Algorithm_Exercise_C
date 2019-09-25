@@ -2,9 +2,13 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include<string>
+
 using namespace std;
 
-int n, k;
+int n;
+string s;
+
 
 int main() {
 
@@ -12,9 +16,12 @@ int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	cin >> n;
-	cin >> k;
+	cin >> n >> s;
 
-
-
+	for (int i = 0; i < n; i++) {
+		int size;
+		int numprint;
+		
+		
+	}
 }
