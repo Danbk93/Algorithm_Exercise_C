@@ -78,13 +78,13 @@ int main() {
 	for (int i = 0; i < virus.size(); i++) {
 		bfs(i, virus[i].first, virus[i].second);
 		
-	/*	for (int j = 0; j < n; j++) {
+		for (int j = 0; j < n; j++) {
 			for (int k = 0; k < n; k++) {
-				cout << dist[i][j][k] << ' ';
-			}
+				cout << dist[i][j][k] << ' ';                                                      
+			} 
 			cout << endl;
 		}
-		cout << endl;*/
+		cout << endl;
 	}
 	
 
@@ -96,6 +96,7 @@ int main() {
 	}
 
 	// k개의 1 추가
+
 	for (int i = 0; i < m; i++) {
 		ind.push_back(1);
 	}
@@ -124,7 +125,6 @@ int main() {
 					}
 
 				}
-
 				//cout << virus[i].first << virus[i].second;
 			}
 		}
