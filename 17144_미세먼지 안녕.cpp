@@ -41,12 +41,12 @@ void bfs(int num, int a, int b) {
 			if (visited[nx][ny] == 1)continue;
 			if (map[nx][ny] == 0) {
 				visited[nx][ny] = 1;
-				dist[num][nx][ny] = dist[num][x][y] + 1;
+				dist[nx][ny] = dist[x][y] + 1;
 				q.push(make_pair(nx, ny));
 			}
 			else if (map[nx][ny] == 2) {
 				visited[nx][ny] = 1;
-				dist[num][nx][ny] = dist[num][x][y];
+				dist[nx][ny] = dist[x][y];
 				q.push(make_pair(nx, ny));
 			}
 
